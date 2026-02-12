@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Voice Player</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .card {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            border: 1px solid #334155;
+            max-width: 400px;
+            width: 90%;
+        }
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            filter: drop-shadow(0 0 10px #38bdf8);
+        }
+        .icon:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px #38bdf8);
+        }
+        .icon:active {
+            transform: scale(0.95);
+        }
+        h2 { margin: 0.5rem 0; color: #38bdf8; }
+        p { color: #94a3b8; font-size: 0.9rem; }
+        .status { margin-top: 1rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon" id="playBtn" onclick="playAudio()">👂</div>
+        <h2>Botón de Oreja</h2>
+        <p>Toca la oreja para escuchar el último mensaje del enjambre.</p>
+        <div id="status" class="status"></div>
+    </div>
+
+    <audio id="audioElement" src="last_message.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById('audioElement');
+        const status = document.getElementById('status');
+
+        function playAudio() {
+            status.innerText = "🔊 Reproduciendo...";
+            audio.currentTime = 0;
+            audio.play().catch(e => {
+                status.innerText = "❌ Error: Haz clic en la página primero";
+                console.error(e);
+            });
+        }
+
+        audio.onended = () => {
+            status.innerText = "✅ Fin del mensaje";
+        };
+        
+        // Auto-play attempt (browser might block)
+        window.onload = () => {
+            playAudio();
+        }
+    </script>
+</body>
+</html>
